@@ -1,4 +1,4 @@
-import Mail from '../lib/Mail';
+import Queue from '../lib/Queue';
 
 export default {
   async store(req, res) {
@@ -7,13 +7,7 @@ export default {
     const user = {
       name, email, password,
     };
-
-    await Mail.sendMail({
-      from: 'Test de filas',
-      to: 'mail@test.com',
-      subject: 'testando filas com redis',
-      html: 'corpo de email',
-    });
+    await Queue.add('RegistrationMail', { user });
     return res.json(user);
   },
 };
